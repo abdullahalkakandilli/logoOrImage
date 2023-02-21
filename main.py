@@ -21,7 +21,7 @@ def _max_width_():
 st.set_page_config(page_icon="✂️", page_title="Logo or Not Logo")
 
 
-c1, c2, c3 = st.columns([1, 6, 1])
+c2, c3 = st.columns([6, 1])
 
 
 with c2:
@@ -29,6 +29,12 @@ with c2:
     st.caption("")
     st.title("Logo or Not Logo")
 
+with c3:
+
+    st.image(
+        "images/logo.png",
+        width=120,
+    )
 
 
 uploaded_file = st.file_uploader(
