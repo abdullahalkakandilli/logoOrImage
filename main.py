@@ -21,7 +21,7 @@ def _max_width_():
 st.set_page_config(page_icon="✂️", page_title="Logo or Not Logo")
 
 
-c1, c2 = st.columns([1, 6])
+c1, c2, c3 = st.columns([1, 6, 1])
 
 
 with c2:
@@ -29,31 +29,31 @@ with c2:
     st.caption("")
     st.title("Logo or Not Logo")
 
-with c2:
 
-    uploaded_file = st.file_uploader(
-        " ",
-        key="1",
-        help="To activate 'wide mode', go to the hamburger menu > Settings > turn on 'wide mode'",
+
+uploaded_file = st.file_uploader(
+    " ",
+    key="1",
+    help="To activate 'wide mode', go to the hamburger menu > Settings > turn on 'wide mode'",
+)
+
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+    uploaded_file.seek(0)
+
+
+    file_container = st.expander("Check your uploaded .csv")
+    file_container.write(df)
+
+
+else:
+    st.info(
+        f"""
+            👆 Upload a .csv file first. Sample to try: [biostats.csv](https://people.sc.fsu.edu/~jburkardt/data/csv/biostats.csv)
+            """
     )
 
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
-        uploaded_file.seek(0)
-
-
-        file_container = st.expander("Check your uploaded .csv")
-        file_container.write(df)
-
-
-    else:
-        st.info(
-            f"""
-                👆 Upload a .csv file first. Sample to try: [biostats.csv](https://people.sc.fsu.edu/~jburkardt/data/csv/biostats.csv)
-                """
-        )
-
-        st.stop()
+    st.stop()
 
 
 def get_values(column_names):
