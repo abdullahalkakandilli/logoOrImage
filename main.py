@@ -61,7 +61,7 @@ def get_values(column_names):
     processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
     for index, row in df.iterrows():
 
-        url = row[column_names]
+        url = row['"'+column_names + '"']
         image = Image.open(requests.get(url, stream=True).raw)
 
         inputs = processor(
@@ -88,8 +88,8 @@ with form:
     submitted = st.form_submit_button(label="Submit")
 
 if submitted:
-    col = [f'"{col}"' for col in column_names]
-    result = get_values(col)
+
+    result = get_values(column_names)
 
 
 from st_aggrid import GridUpdateMode, DataReturnMode, GridOptionsBuilder, AgGrid
