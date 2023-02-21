@@ -41,10 +41,8 @@ with c2:
     )
 
     if uploaded_file is not None:
-        file_container = st.expander("Check your uploaded .csv")
         df = pd.read_csv(uploaded_file)
         uploaded_file.seek(0)
-        file_container.write(df)
         for index, row in df.iterrows():
 
             url = row['Logo']
@@ -64,21 +62,9 @@ with c2:
             if (probs[0][1] > 0.40):
                 df.at[index, 'Logo'] = 'not Logo'
 
+        file_container = st.expander("Check your uploaded .csv")
+        file_container.write(df)
 
-        def convert_df(df):
-            return df.to_csv().encode("utf-8")
-
-
-        csv = convert_df(df)
-
-        st.caption("")
-
-        st.download_button(
-            label="Download results",
-            data=csv,
-            file_name="classification_results.csv",
-            mime="text/csv",
-        )
 
     else:
         st.info(
