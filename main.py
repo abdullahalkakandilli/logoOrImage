@@ -87,8 +87,9 @@ with form:
 
     submitted = st.form_submit_button(label="Submit")
 
-if st.button('Get Results'):
-    result = get_values(column_names)
+if submitted:
+    col = [f'"{col}"' for col in column_names]
+    result = get_values(col)
 
 
 from st_aggrid import GridUpdateMode, DataReturnMode, GridOptionsBuilder, AgGrid
