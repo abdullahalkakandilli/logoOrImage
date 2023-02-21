@@ -78,8 +78,9 @@ def get_values(column_names):
         if (column_names == 'Logo'):
             if (probs[0][1] > 0.40):
                 df.at[index, column_names] = 'not Logo'
-        elif (probs[0][1] < 0.70):
-            df.at[index, column_names] = 'not Image'
+        else:
+            if (probs[0][1] < 0.60):
+                df.at[index, column_names] = 'not Image'
 
 form = st.form(key="annotation")
 with form:
