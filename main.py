@@ -60,7 +60,7 @@ def get_values(column_names):
 
     model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
     processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
-    df_after = df.copy()
+    df_after = pd.DataFrame()
 
     for index, row in df.iterrows():
 
@@ -80,10 +80,12 @@ def get_values(column_names):
         probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
         if (column_names == 'Logo'):
             if (probs[0][1] > 0.40):
-                df_after.at[index, column_names] = 'not Logo'
+                df.at[index, column_names] = 'not Logo'
+                df_after.append(df.index)
         else:
             if (probs[0][1] < 0.60):
-                df_after.at[index, column_names] = 'not Image'
+                df.at[index, column_names] = 'not Image'
+                df_after.append(df.index)
     return df_after
 #df = final result
 form = st.form(key="annotation")
