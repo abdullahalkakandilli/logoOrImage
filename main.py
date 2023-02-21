@@ -63,7 +63,7 @@ def get_values(column_names):
     for cols in column_names:
         for index, row in df.iterrows():
 
-            url = row[column_names]
+            url = row[cols]
             image = Image.open(requests.get(url, stream=True).raw)
 
             inputs = processor(
