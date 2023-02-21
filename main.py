@@ -68,7 +68,8 @@ def get_values(column_names):
     for cols in column_names:
         print(cols)
         for index, row in df.iterrows():
-            if row[cols] == '':
+            if not row[cols]:
+                df.at[index, cols] = 'Empty Column'
                 continue
             url = row[cols]
 
