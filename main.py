@@ -60,7 +60,9 @@ def get_values(column_names):
 
     model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
     processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
+    print("column names" + column_names)
     for cols in column_names:
+        print("cols tag" + cols)
         for index, row in df.iterrows():
 
             url = row[cols]
