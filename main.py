@@ -41,10 +41,8 @@ with c2:
     )
 
     if uploaded_file is not None:
-        file_container = st.expander("Check your uploaded .csv")
         df = pd.read_csv(uploaded_file)
         uploaded_file.seek(0)
-        file_container.write(df)
         for index, row in df.iterrows():
 
             url = row['Logo']
@@ -63,37 +61,8 @@ with c2:
             probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
             if (probs[0][1] > 0.40):
                 df.at[index, 'Logo'] = 'not Logo'
-
-    else:
-        st.info(
-            f"""
-                👆 Upload a .csv file first. Sample to try: [biostats.csv](https://people.sc.fsu.edu/~jburkardt/data/csv/biostats.csv)
-                """
-        )
-
+        file_container = st.expander("Check your uploaded .csv")
+        file_container.write(df)
         st.stop()
-
-
-# The code below is for the download button
-# Cache the conversion to prevent computation on every rerun
-
-with c2:
-
-    @st.experimental_memo
-    def convert_df(df):
-        return df.to_csv().encode("utf-8")
-
-
-    csv = convert_df(df)
-
-    st.caption("")
-
-    st.download_button(
-        label="Download results",
-        data=csv,
-        file_name="classification_results.csv",
-        mime="text/csv",
-    )
-
 
 
