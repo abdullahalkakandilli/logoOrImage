@@ -61,7 +61,7 @@ def get_values(column_names):
     processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
     for index, row in df.iterrows():
 
-        url = row['"'+column_names + '"']
+        url = row[column_names]
         image = Image.open(requests.get(url, stream=True).raw)
 
         inputs = processor(
