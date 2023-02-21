@@ -78,15 +78,17 @@ def get_values():
         if (probs[0][1] > 0.40):
             df.at[index, 'Logo'] = 'not Logo'
 
+form = st.form(key="annotation")
+with form:
 
-with st.form:
     column_name = st.text_input('Enter exact column name')
     column_names = st.checkbox(
         "Column name:", list(df.columns)
     )
 
+    submitted = st.form_submit_button(label="Submit")
 
-if st.button('Get Results'):
+if submitted('Get Results'):
     result = get_values()
 
 
