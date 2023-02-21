@@ -79,6 +79,11 @@ def get_values():
             df.at[index, 'Logo'] = 'not Logo'
 
 
+with st.form:
+    column_name = st.text_input('Enter exact column name')
+    column_names = st.checkbox(
+        "Column name:", list(df.columns)
+    )
 
 
 if st.button('Get Results'):
@@ -126,11 +131,4 @@ with c29:
         df,
         "File.csv",
         "Download to CSV",
-    )
-
-with c30:
-    CSVButton = download_button(
-        df,
-        "File.csv",
-        "Download to TXT",
     )
