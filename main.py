@@ -28,14 +28,10 @@ with c2:
 
     st.caption("")
     st.title("Logo or Not Logo")
-
-with c3:
-
     st.image(
         "images/logo.png",
         width=200,
     )
-
 
 uploaded_file = st.file_uploader(
     " ",
