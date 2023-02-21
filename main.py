@@ -55,13 +55,13 @@ with c2:
 
         st.stop()
 
-def get_values():
+def get_values(column_names):
 
     model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
     processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
     for index, row in df.iterrows():
 
-        url = row['Logo']
+        url = row[column_names]
         image = Image.open(requests.get(url, stream=True).raw)
 
         inputs = processor(
@@ -81,7 +81,6 @@ def get_values():
 form = st.form(key="annotation")
 with form:
 
-    column_name = st.text_input('Enter exact column name')
     column_names = st.selectbox(
         "Column name:", list(df.columns)
     )
@@ -89,7 +88,7 @@ with form:
     submitted = st.form_submit_button(label="Submit")
 
 if st.button('Get Results'):
-    result = get_values()
+    result = get_values(column_names)
 
 
 from st_aggrid import GridUpdateMode, DataReturnMode, GridOptionsBuilder, AgGrid
