@@ -71,27 +71,28 @@ def get_values(column_names):
             if not row[cols]:
                 df.at[index, cols] = 'Empty Column'
                 continue
-            url = row[cols]
-
-            image = Image.open(requests.get(url, stream=True).raw)
-
-            inputs = processor(
-
-                text=["logo", "not logo"], images=image, return_tensors="pt", padding=True
-
-            )
-
-            outputs = model(**inputs)
-
-            logits_per_image = outputs.logits_per_image  # this is the image-text similarity score
-
-            probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
-            if (cols == 'Logo'):
-                if (probs[0][1] > 0.40):
-                    df.at[index, cols] = 'not Logo'
             else:
-                if (probs[0][1] < 0.60):
-                    df.at[index, cols] = 'not Image'
+                url = row[cols]
+
+                image = Image.open(requests.get(url, stream=True).raw)
+
+                inputs = processor(
+
+                    text=["logo", "not logo"], images=image, return_tensors="pt", padding=True
+
+                )
+
+                outputs = model(**inputs)
+
+                logits_per_image = outputs.logits_per_image  # this is the image-text similarity score
+
+                probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
+                if (cols == 'Logo'):
+                    if (probs[0][1] > 0.40):
+                        df.at[index, cols] = 'not Logo'
+                else:
+                    if (probs[0][1] < 0.60):
+                        df.at[index, cols] = 'not Image'
     return
 
 form = st.form(key="annotation")
