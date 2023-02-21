@@ -82,13 +82,13 @@ form = st.form(key="annotation")
 with form:
 
     column_name = st.text_input('Enter exact column name')
-    column_names = st.checkbox(
+    column_names = st.selectbox(
         "Column name:", list(df.columns)
     )
 
     submitted = st.form_submit_button(label="Submit")
 
-if submitted('Get Results'):
+if st.button('Get Results'):
     result = get_values()
 
 
