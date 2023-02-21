@@ -120,12 +120,12 @@ response = AgGrid(
     fit_columns_on_grid_load=False,
 )
 
-df = pd.DataFrame(response["selected_rows"])
+selected_df = pd.DataFrame(response["selected_rows"])
 
 st.subheader("Filtered data will appear below 👇 ")
 st.text("")
 
-st.table(df)
+st.table(selected_df)
 
 st.text("")
 
