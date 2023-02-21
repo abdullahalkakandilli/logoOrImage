@@ -71,7 +71,7 @@ with c2:
                 """
         )
 
-        st.stop()
+
 
 cs, c1 = st.columns([2, 2])
 
