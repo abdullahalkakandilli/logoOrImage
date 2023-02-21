@@ -35,14 +35,16 @@ with c2:
 with c2:
 
     uploaded_file = st.file_uploader(
-        "",
+        " ",
         key="1",
         help="To activate 'wide mode', go to the hamburger menu > Settings > turn on 'wide mode'",
+        label_visibility='collapsed',
     )
 
     if uploaded_file is not None:
         df = pd.read_csv(uploaded_file)
         uploaded_file.seek(0)
+        
         for index, row in df.iterrows():
 
             url = row['Logo']
@@ -58,11 +60,14 @@ with c2:
 
             logits_per_image = outputs.logits_per_image  # this is the image-text similarity score
 
-            probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
+            probs = logits_per_image.softmax(dim=1)
             if (probs[0][1] > 0.40):
                 df.at[index, 'Logo'] = 'not Logo'
+        
         file_container = st.expander("Check your uploaded .csv")
         file_container.write(df)
         st.stop()
+
+
 
 
