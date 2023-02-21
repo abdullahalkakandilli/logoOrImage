@@ -41,7 +41,7 @@ with c2:
         df = pd.read_csv(uploaded_file)
         uploaded_file.seek(0)
 
-        df_after = df.copy()
+
         file_container = st.expander("Check your uploaded .csv")
         file_container.write(df)
 
@@ -59,6 +59,7 @@ def get_values(column_names):
 
     model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
     processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
+    df_after = df.copy()
     for index, row in df_after.iterrows():
 
         url = row[column_names]
@@ -81,6 +82,7 @@ def get_values(column_names):
         else:
             if (probs[0][1] < 0.60):
                 df_after.at[index, column_names] = 'not Image'
+
 #df = final result
 form = st.form(key="annotation")
 with form:
