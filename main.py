@@ -64,6 +64,22 @@ with c2:
             if (probs[0][1] > 0.40):
                 df.at[index, 'Logo'] = 'not Logo'
 
+
+        def convert_df(df):
+            return df.to_csv().encode("utf-8")
+
+
+        csv = convert_df(df)
+
+        st.caption("")
+
+        st.download_button(
+            label="Download results",
+            data=csv,
+            file_name="classification_results.csv",
+            mime="text/csv",
+        )
+
     else:
         st.info(
             f"""
@@ -71,14 +87,9 @@ with c2:
                 """
         )
 
-
-
-cs, c1 = st.columns([2, 2])
-
-# The code below is for the download button
-# Cache the conversion to prevent computation on every rerun
-
-with cs:
+        st.stop()
+'''
+with c2:
 
     @st.experimental_memo
     def convert_df(df):
@@ -95,6 +106,6 @@ with cs:
         file_name="classification_results.csv",
         mime="text/csv",
     )
-
+'''
 
 
