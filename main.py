@@ -21,7 +21,7 @@ def _max_width_():
 st.set_page_config(page_icon="✂️", page_title="Logo or Not Logo")
 
 
-c1, c2 = st.columns([1, 6])
+c1, c2, c3 = st.columns([1, 6, 1])
 
 
 with c2:
@@ -81,10 +81,6 @@ def get_values():
 
 
 
-if st.button('Get Results'):
-    result = get_values()
-
-
 from st_aggrid import GridUpdateMode, DataReturnMode, GridOptionsBuilder, AgGrid
 
 gb = GridOptionsBuilder.from_dataframe(df)
@@ -118,19 +114,17 @@ st.table(df)
 
 st.text("")
 
-c29, c30, c31 = st.columns([1, 1, 2])
 
-with c29:
+if st.button('Get Results'):
+    result = get_values()
+
+
+c29, c30, c31 = st.columns([1, 6, 1])
+
+with c30:
 
     CSVButton = download_button(
         df,
         "File.csv",
         "Download to CSV",
-    )
-
-with c30:
-    CSVButton = download_button(
-        df,
-        "File.csv",
-        "Download to TXT",
     )
