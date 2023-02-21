@@ -79,12 +79,12 @@ def get_values(column_names):
             logits_per_image = outputs.logits_per_image  # this is the image-text similarity score
 
             probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
-            if (column_names == 'Logo'):
+            if (cols == 'Logo'):
                 if (probs[0][1] > 0.40):
-                    df.at[index, column_names] = 'not Logo'
+                    df.at[index, cols] = 'not Logo'
             else:
                 if (probs[0][1] < 0.60):
-                    df.at[index, column_names] = 'not Image'
+                    df.at[index, cols] = 'not Image'
     return
 
 form = st.form(key="annotation")
