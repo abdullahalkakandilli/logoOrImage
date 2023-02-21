@@ -38,13 +38,13 @@ with c2:
         " ",
         key="1",
         help="To activate 'wide mode', go to the hamburger menu > Settings > turn on 'wide mode'",
-        label_visibility='collapsed',
     )
 
     if uploaded_file is not None:
+        file_container = st.expander("Check your uploaded .csv")
         df = pd.read_csv(uploaded_file)
         uploaded_file.seek(0)
-        
+        file_container.write(df)
         for index, row in df.iterrows():
 
             url = row['Logo']
@@ -60,14 +60,41 @@ with c2:
 
             logits_per_image = outputs.logits_per_image  # this is the image-text similarity score
 
-            probs = logits_per_image.softmax(dim=1)
+            probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
             if (probs[0][1] > 0.40):
                 df.at[index, 'Logo'] = 'not Logo'
-        
-        file_container = st.expander("Check your uploaded .csv")
-        file_container.write(df)
+
+    else:
+        st.info(
+            f"""
+                👆 Upload a .csv file first. Sample to try: [biostats.csv](https://people.sc.fsu.edu/~jburkardt/data/csv/biostats.csv)
+                """
+        )
+
         st.stop()
 
+cs, c1 = st.columns([2, 2])
+
+# The code below is for the download button
+# Cache the conversion to prevent computation on every rerun
+
+with cs:
+
+    @st.experimental_memo
+    def convert_df(df):
+        return df.to_csv().encode("utf-8")
+
+
+    csv = convert_df(df)
+
+    st.caption("")
+
+    st.download_button(
+        label="Download results",
+        data=csv,
+        file_name="classification_results.csv",
+        mime="text/csv",
+    )
 
 
 
