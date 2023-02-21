@@ -3,6 +3,7 @@ import requests
 from transformers import AutoProcessor, CLIPModel
 import streamlit as st
 import pandas as pd
+import os
 from functionforDownloadButtons import download_button
 
 model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -72,7 +73,7 @@ with c2:
                 👆 Upload a .csv file first. Sample to try: [biostats.csv](https://people.sc.fsu.edu/~jburkardt/data/csv/biostats.csv)
                 """
         )
-
+        os._exit(0)
         st.stop()
 c3, c4 = st.columns([1, 6])
 
