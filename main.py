@@ -25,13 +25,15 @@ c2, c3 = st.columns([6, 1])
 
 
 with c2:
-
-    st.caption("")
-    st.title("Logo or Not Logo")
-    st.image(
-        "images/logo.png",
-        width=200,
-    )
+    c31, c32 = st.columns([3, 3])
+    with c31:
+        st.caption("")
+        st.title("Logo or Not Logo")
+    with c32:
+        st.image(
+            "images/logo.png",
+            width=200,
+        )
 
 uploaded_file = st.file_uploader(
     " ",
