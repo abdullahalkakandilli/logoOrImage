@@ -3,7 +3,7 @@ import requests
 from transformers import AutoProcessor, CLIPModel
 import streamlit as st
 import pandas as pd
-from streamlit_tags import st_tags
+
 
 model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -73,28 +73,27 @@ with c2:
 
         st.stop()
 
-    cs, c1 = st.columns([2, 2])
 
-    # The code below is for the download button
-    # Cache the conversion to prevent computation on every rerun
+# The code below is for the download button
+# Cache the conversion to prevent computation on every rerun
 
-    with cs:
+with c2:
 
-        @st.experimental_memo
-        def convert_df(df):
-            return df.to_csv().encode("utf-8")
+    @st.experimental_memo
+    def convert_df(df):
+        return df.to_csv().encode("utf-8")
 
 
-        csv = convert_df(df)
+    csv = convert_df(df)
 
-        st.caption("")
+    st.caption("")
 
-        st.download_button(
-            label="Download results",
-            data=csv,
-            file_name="classification_results.csv",
-            mime="text/csv",
-        )
+    st.download_button(
+        label="Download results",
+        data=csv,
+        file_name="classification_results.csv",
+        mime="text/csv",
+    )
 
 
 
