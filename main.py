@@ -33,7 +33,7 @@ with c3:
 
     st.image(
         "images/logo.png",
-        width=120,
+        width=200,
     )
 
 
