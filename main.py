@@ -60,29 +60,29 @@ def get_values(column_names):
 
     model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
     processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
+    for cols in column_names:
+        for index, row in df.iterrows():
 
-    for index, row in df.iterrows():
+            url = row[column_names]
+            image = Image.open(requests.get(url, stream=True).raw)
 
-        url = row[column_names]
-        image = Image.open(requests.get(url, stream=True).raw)
+            inputs = processor(
 
-        inputs = processor(
+                text=["logo", "not logo"], images=image, return_tensors="pt", padding=True
 
-            text=["logo", "not logo"], images=image, return_tensors="pt", padding=True
+            )
 
-        )
+            outputs = model(**inputs)
 
-        outputs = model(**inputs)
+            logits_per_image = outputs.logits_per_image  # this is the image-text similarity score
 
-        logits_per_image = outputs.logits_per_image  # this is the image-text similarity score
-
-        probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
-        if (column_names == 'Logo'):
-            if (probs[0][1] > 0.40):
-                df.at[index, column_names] = 'not Logo'
-        else:
-            if (probs[0][1] < 0.60):
-                df.at[index, column_names] = 'not Image'
+            probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
+            if (column_names == 'Logo'):
+                if (probs[0][1] > 0.40):
+                    df.at[index, column_names] = 'not Logo'
+            else:
+                if (probs[0][1] < 0.60):
+                    df.at[index, column_names] = 'not Image'
     return
 
 form = st.form(key="annotation")
