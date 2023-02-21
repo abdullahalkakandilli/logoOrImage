@@ -3,7 +3,7 @@ import requests
 from transformers import AutoProcessor, CLIPModel
 import streamlit as st
 import pandas as pd
-
+from functionforDownloadButtons import download_button
 
 model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -71,7 +71,7 @@ with c2:
                 """
         )
 
-
+        st.stop()
 
 cs, c1 = st.columns([2, 2])
 
