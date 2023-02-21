@@ -1,7 +1,1 @@
-torch
-transformers
-pillow
-requests
-pandas
-streamlit_tags
 streamlit
