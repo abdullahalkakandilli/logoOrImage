@@ -74,8 +74,9 @@ with c2:
         )
 
         st.stop()
-'''
-with c2:
+c3, c4 = st.columns([1, 6])
+
+with c3:
 
     @st.experimental_memo
     def convert_df(df):
@@ -92,6 +93,6 @@ with c2:
         file_name="classification_results.csv",
         mime="text/csv",
     )
-'''
+
 
 
