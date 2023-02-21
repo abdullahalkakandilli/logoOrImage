@@ -86,7 +86,7 @@ def get_values(column_names):
             if (probs[0][1] < 0.60):
                 df.at[index, column_names] = 'not Image'
                 df_after.append(df.index)
-    return df_after
+    return
 #df = final result
 form = st.form(key="annotation")
 with form:
@@ -96,12 +96,13 @@ with form:
     )
 
     submitted = st.form_submit_button(label="Submit")
-
+result_df = pd.DataFrame()
 if submitted:
 
-    result_df = get_values(column_names)
+    result = get_values(column_names)
 
 
+'''
 from st_aggrid import GridUpdateMode, DataReturnMode, GridOptionsBuilder, AgGrid
 
 gb = GridOptionsBuilder.from_dataframe(result_df)
@@ -134,13 +135,13 @@ st.text("")
 st.table(selected_df)
 
 st.text("")
-
+'''
 c29, c30, c31 = st.columns([1, 1, 2])
 
 with c29:
 
     CSVButton = download_button(
-        selected_df,
+        df,
         "File.csv",
         "Download to CSV",
     )
