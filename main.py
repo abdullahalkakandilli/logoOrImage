@@ -102,40 +102,6 @@ if submitted:
     result = get_values(column_names)
 
 
-'''
-from st_aggrid import GridUpdateMode, DataReturnMode, GridOptionsBuilder, AgGrid
-
-gb = GridOptionsBuilder.from_dataframe(result_df)
-# enables pivoting on all columns, however i'd need to change ag grid to allow export of pivoted/grouped data, however it select/filters groups
-gb.configure_default_column(enablePivot=True, enableValue=True, enableRowGroup=True)
-gb.configure_selection(selection_mode="multiple", use_checkbox=True)
-gb.configure_side_bar()  # side_bar is clearly a typo :) should by sidebar
-gridOptions = gb.build()
-
-st.success(
-    f"""
-        💡 Tip! Hold the shift key when selecting rows to select multiple rows at once!
-        """
-)
-
-response = AgGrid(
-    result_df,
-    gridOptions=gridOptions,
-    enable_enterprise_modules=True,
-    update_mode=GridUpdateMode.MODEL_CHANGED,
-    data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
-    fit_columns_on_grid_load=False,
-)
-
-selected_df = pd.DataFrame(response["selected_rows"])
-
-st.subheader("Filtered data will appear below 👇 ")
-st.text("")
-
-st.table(selected_df)
-
-st.text("")
-'''
 c29, c30, c31 = st.columns([1, 1, 2])
 
 with c29:
