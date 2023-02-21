@@ -25,7 +25,7 @@ c2, c3 = st.columns([6, 1])
 
 
 with c2:
-    c31, c32 = st.columns([8, 2])
+    c31, c32 = st.columns([10, 2])
     with c31:
         st.caption("")
         st.title("Logo or Not Logo")
