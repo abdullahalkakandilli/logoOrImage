@@ -88,7 +88,7 @@ def get_values(column_names):
 form = st.form(key="annotation")
 with form:
 
-    column_names = st.selectbox(
+    column_names = st.multiselect(
         "Column name:", list(df.columns)
     )
 
@@ -105,6 +105,6 @@ with c29:
 
     CSVButton = download_button(
         df,
-        "File.csv",
+        "FlaggedFile.csv",
         "Download to CSV",
     )
