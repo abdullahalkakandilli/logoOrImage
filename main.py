@@ -41,7 +41,7 @@ with c2:
         df = pd.read_csv(uploaded_file)
         uploaded_file.seek(0)
 
-
+        df_after = df.copy()
         file_container = st.expander("Check your uploaded .csv")
         file_container.write(df)
 
@@ -59,7 +59,7 @@ def get_values(column_names):
 
     model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
     processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
-    for index, row in df.iterrows():
+    for index, row in df_after.iterrows():
 
         url = row[column_names]
         image = Image.open(requests.get(url, stream=True).raw)
@@ -77,16 +77,16 @@ def get_values(column_names):
         probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
         if (column_names == 'Logo'):
             if (probs[0][1] > 0.40):
-                df.at[index, column_names] = 'not Logo'
+                df_after.at[index, column_names] = 'not Logo'
         else:
             if (probs[0][1] < 0.60):
-                df.at[index, column_names] = 'not Image'
-
+                df_after.at[index, column_names] = 'not Image'
+#df = final result
 form = st.form(key="annotation")
 with form:
 
     column_names = st.selectbox(
-        "Column name:", list(df.columns)
+        "Column name:", list(df_after.columns)
     )
 
     submitted = st.form_submit_button(label="Submit")
@@ -98,7 +98,7 @@ if submitted:
 
 from st_aggrid import GridUpdateMode, DataReturnMode, GridOptionsBuilder, AgGrid
 
-gb = GridOptionsBuilder.from_dataframe(df)
+gb = GridOptionsBuilder.from_dataframe(df_after)
 # enables pivoting on all columns, however i'd need to change ag grid to allow export of pivoted/grouped data, however it select/filters groups
 gb.configure_default_column(enablePivot=True, enableValue=True, enableRowGroup=True)
 gb.configure_selection(selection_mode="multiple", use_checkbox=True)
@@ -112,7 +112,7 @@ st.success(
 )
 
 response = AgGrid(
-    df,
+    df_after,
     gridOptions=gridOptions,
     enable_enterprise_modules=True,
     update_mode=GridUpdateMode.MODEL_CHANGED,
@@ -134,7 +134,7 @@ c29, c30, c31 = st.columns([1, 1, 2])
 with c29:
 
     CSVButton = download_button(
-        df,
+        selected_df,
         "File.csv",
         "Download to CSV",
     )
