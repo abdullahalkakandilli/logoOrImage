@@ -71,11 +71,10 @@ def get_values(column_names):
 
             url = row[cols]
 
-            if pd.isna(df.loc[index, url]):
+            if pd.isna(df.loc[index, cols]):
                 df.at[index, cols] = 'empty value'
 
             image = Image.open(requests.get(url, stream=True).raw)
-
             inputs = processor(
 
                 text=["logo", "not logo"], images=image, return_tensors="pt", padding=True
