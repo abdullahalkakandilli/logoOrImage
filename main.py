@@ -72,7 +72,8 @@ def get_values(column_names):
             url = row[cols]
 
             if pd.isna(df.loc[index, cols]):
-                df.at[index, cols] = 'empty value'
+                df.at[index, cols] = 'empty value',
+                continue
 
             image = Image.open(requests.get(url, stream=True).raw)
             inputs = processor(
