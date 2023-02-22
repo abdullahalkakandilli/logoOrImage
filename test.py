@@ -7,7 +7,7 @@ model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
 
-df = pd.read_csv(r'C:\Users\alka\Masaüstü\imagesT.csv')
+df = pd.read_csv(r'C:\Users\alka\Masaüstü\third.csv')
 
 for index, row in df.iterrows():
 
@@ -25,5 +25,5 @@ for index, row in df.iterrows():
     logits_per_image = outputs.logits_per_image  # this is the image-text similarity score
 
     probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
-    if (probs[0][1] > 0.40):
-        df.at[index, 'Logo'] = 'not Logo'
+
+print(probs)

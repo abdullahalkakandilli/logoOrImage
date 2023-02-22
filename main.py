@@ -88,7 +88,7 @@ def get_values(column_names):
 
                 probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
                 if (cols == 'Logo'):
-                    if (probs[0][1] > 0.40):
+                    if (probs[0][1] > 0.45):
                         df.at[index, cols] = 'not Logo'
                 else:
                     if (probs[0][1] < 0.60):
