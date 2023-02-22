@@ -70,8 +70,9 @@ def get_values(column_names):
         for index, row in df.iterrows():
 
             url = row[cols]
-            if url == "":
-                df.at[index, cols] = 'empty'
+
+            if pd.isna(df.loc[index, url]):
+                df.at[index, cols] = 'empty value'
 
             image = Image.open(requests.get(url, stream=True).raw)
 
